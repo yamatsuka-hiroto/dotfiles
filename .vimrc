@@ -72,41 +72,33 @@ set noerrorbells "エラーメッセージの表示時にビープを鳴らさ�
 if &compatible
   set nocompatible
 endif
-set runtimepath^=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" rust
-let g:rustfmt_autosave = 1
-let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
-
-set hidden
-let g:racer_cmd = '$HOME/.cargo/bin/racer'
-let $RUST_SRC_PATH="/usr/local/src/rustc-1.10.0/src"
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 "h NERDTree
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+call dein#begin(expand('~/dein/dein'))
 
-" NeoBundle で管理するプラグインを追加します。
-NeoBundle 'Shougo/neocomplcache.git'
-NeoBundle 'Shougo/unite.vim.git'
-NeoBundle 'Shougo/neocomplete.vim'
+call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/neosnippet')
+call dein#add('fatih/vim-go')
+call dein#add('Shougo/unite.vim.git')
+call dein#add('sjl/badwolf')
+call dein#add('nanotech/jellybeans.vim')
+call dein#add('w0ng/vim-hybrid')
+call dein#add('vim-scripts/Wombat')
+call dein#add('tomasr/molokai')
+call dein#add('rust-lang/rust.vim')
+call dein#add('racer-rust/vim-racer')
+call dein#add('scrooloose/nerdtree')
+call dein#add('vim-scripts/vim-auto-save')
 
-NeoBundle 'sjl/badwolf'           
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'vim-scripts/Wombat'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'racer-rust/vim-racer'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'fatih/vim-go'
+call dein#end()
 
-call neobundle#end()
 filetype plugin indent on
-NeoBundleCheck
-
 "
 let mapleader = ","
 " ,のデフォルトの機能は、\で使えるように退避
@@ -133,9 +125,16 @@ let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 
 if $GOROOT != ''
-    set rtp+=$GOROOT/misc/vim
-  endif
+  set rtp+=$GOROOT/misc/vim
+endif
 
+" rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
+
+set hidden
+let g:racer_cmd = '$HOME/.cargo/bin/racer'
+let $RUST_SRC_PATH="/usr/local/src/rustc-1.10.0/src"
 syntax on
 colorscheme molokai 
 
@@ -143,6 +142,10 @@ colorscheme molokai
 if has('nvim')
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
+
+"auto-save
+let g:auto_save = 1
+let g:auto_save_in_insert_mode = 0
 
 " neocomplete
 " Disable AutoComplPop.
@@ -215,3 +218,5 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
